@@ -10,7 +10,7 @@ namespace DataAccessCore.Commands
     /// <summary>
     /// Command Object that inserts a set of entities in a single transaction
     /// </summary>
-    public class BulkInsertEntitiesCommand<T, T2> : ICommand<T> where T : DbContext where T2 : class
+    public class BulkInsertEntitiesCommand<T> : ICommand<T> where T : DbContext
     {
         public enum InsertModes
         {
@@ -20,13 +20,13 @@ namespace DataAccessCore.Commands
 
         #region Fields
 
-        private List<T2> _entities;
+        private IList<object> _entities;
 
         #endregion Fields
 
         #region Constructors
         
-        public BulkInsertEntitiesCommand(List<T2> entities)
+        public BulkInsertEntitiesCommand(IList<object> entities)
         {
             _entities = entities;
         }
@@ -49,7 +49,7 @@ namespace DataAccessCore.Commands
             Type type = _entities.GetType();
 
             if (InsertMode == InsertModes.Replace)
-                context.BulkInsertOrUpdate(_entities);
+                context.Update(_entities);
 
             else
                 context.BulkInsert(_entities);

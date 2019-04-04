@@ -21,13 +21,13 @@ namespace DataAccessCore.Commands.Tests
         {
             IList<TestEntity> entities = new List<TestEntity>();
 
-            for (int a = 0; a > 10; a++)
+            for (int a = 0; a < 10; a++)
                 entities.Add(new TestEntity() { ParA = "a", ParB = "A" });
 
             Assert.IsNotNull(entities);
 
 
-            BulkInsertEntitiesCommand<TestContext> testCommand = new BulkInsertEntitiesCommand<TestContext>(entities.Cast<object>().ToList());
+            BulkInsertEntitiesCommand<TestContext> testCommand = new BulkInsertEntitiesCommand<TestContext>(entities);
             testCommand.InsertMode = BulkInsertEntitiesCommand<TestContext>.InsertModes.Replace;
 
             Assert.IsNotNull(testCommand);
