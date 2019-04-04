@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore.Extensions;
 using System.Collections.Generic;
 using System;
@@ -20,13 +19,13 @@ namespace DataAccessCore.Commands
 
         #region Fields
 
-        private IList<object> _entities;
+        private IEnumerable<object> _entities;
 
         #endregion Fields
 
         #region Constructors
         
-        public BulkInsertEntitiesCommand(IList<object> entities)
+        public BulkInsertEntitiesCommand(IEnumerable<object> entities)
         {
             _entities = entities;
         }
@@ -43,17 +42,18 @@ namespace DataAccessCore.Commands
             if (_entities == null)
                 throw new ArgumentNullException("Entities");
 
-            if (_entities.Count == 0)
+            if (_entities.Count() == 0)
                 return;
 
             Type type = _entities.GetType();
 
             if (InsertMode == InsertModes.Replace)
-                context.Update(_entities);
+                context.UpdateRange(_entities);
 
             else
-                context.BulkInsert(_entities);
+                context.AddRange(_entities);
 
+            context.SaveChanges();
             context.Dispose();
         }
 

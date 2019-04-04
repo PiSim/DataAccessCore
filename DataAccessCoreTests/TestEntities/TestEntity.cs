@@ -11,7 +11,7 @@ namespace DataAccessCoreTests.TestEntities
         public int ID { get; set; }
         public string ParA { get; set; }
         public string ParB { get; set; }
-        public int TestEntity2ID { get; set; }
+        public int? TestEntity2ID { get; set; }
 
         public TestEntity2 TestEntity2 { get; set; }
     }
