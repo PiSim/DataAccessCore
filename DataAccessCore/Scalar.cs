@@ -3,7 +3,7 @@ using System;
 
 namespace DataAccessCore
 {
-    public class ScalarBase<T, T2> : IScalar<T, T2> where T2 : DbContext
+    public abstract class Scalar<T, T2> : IScalar<T, T2> where T2 : DbContext
     {
         #region Properties
 
@@ -17,10 +17,7 @@ namespace DataAccessCore
 
         #region Methods
 
-        public virtual T Execute(T2 context)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract T Execute(T2 context);
 
         #endregion Methods
     }

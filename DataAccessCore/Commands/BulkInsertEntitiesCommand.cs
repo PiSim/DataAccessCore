@@ -9,56 +9,24 @@ namespace DataAccessCore.Commands
     /// <summary>
     /// Command Object that inserts a set of entities in a single transaction
     /// </summary>
-    public class BulkInsertEntitiesCommand<T> : ICommand<T> where T : DbContext
+    public class BulkInsertEntitiesCommand<T> : BulkCommand<T> where T : DbContext
     {
-        public enum InsertModes
-        {
-            Ignore,
-            Replace
-        }
-
-        #region Fields
-
-        private IEnumerable<object> _entities;
-
-        #endregion Fields
-
         #region Constructors
         
-        public BulkInsertEntitiesCommand(IEnumerable<object> entities)
+        public BulkInsertEntitiesCommand(IEnumerable<object> entities, int batchSize = 10000) : base(entities, batchSize)
         {
-            _entities = entities;
         }
 
         #endregion Constructors
 
         #region Methods
-
-        public void Execute(T context)
+        
+        protected override void ExecuteBatch(IEnumerable<object> batch, T context)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
-
-            if (_entities == null)
-                throw new ArgumentNullException("Entities");
-
-            if (_entities.Count() == 0)
-                return;
-
-            Type type = _entities.GetType();
-
-            if (InsertMode == InsertModes.Replace)
-                context.UpdateRange(_entities);
-
-            else
-                context.AddRange(_entities);
-
+            context.AddRange(batch);
             context.SaveChanges();
-            context.Dispose();
         }
 
         #endregion Methods
-
-        public InsertModes InsertMode { get; set; } = InsertModes.Ignore;
     }
 }

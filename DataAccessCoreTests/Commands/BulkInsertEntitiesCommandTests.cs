@@ -19,6 +19,8 @@ namespace DataAccessCore.Commands.Tests
         [TestMethod()]
         public void ExecuteTest()
         {
+            testData.Execute(new DeleteAllEntitiesCommand<TestContext,TestEntity>());
+
             IList<TestEntity> entities = new List<TestEntity>();
 
             for (int a = 0; a < 10; a++)
@@ -26,12 +28,9 @@ namespace DataAccessCore.Commands.Tests
 
             Assert.IsNotNull(entities);
 
-
             BulkInsertEntitiesCommand<TestContext> testCommand = new BulkInsertEntitiesCommand<TestContext>(entities);
-            testCommand.InsertMode = BulkInsertEntitiesCommand<TestContext>.InsertModes.Replace;
 
             Assert.IsNotNull(testCommand);
-            Assert.IsNotNull(testCommand.InsertMode);
 
             testData.Execute(testCommand);
             

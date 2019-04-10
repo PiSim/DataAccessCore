@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataAccessCore
 {
-    public class QueryBase<T, T2> : IQuery<T, T2> where T2 : DbContext
+    public class Query<T, T2> : IQuery<T, T2> where T : class where T2 : DbContext
     {
         #region Properties
 
@@ -32,9 +32,22 @@ namespace DataAccessCore
 
         #region Methods
 
+        /// <summary>
+        /// Creates an IQueryable for the specified entity type and applies the given
+        /// AsNoTracking and LazyLoadingEnabled settings
+        /// </summary>
+        /// <param name="context">The DbContext to query</param>
+        /// <returns>An IQueryable<T></returns>
         public virtual IQueryable<T> Execute(T2 context)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = context.Set<T>();
+
+            if (AsNoTracking)
+                query = query.AsNoTracking();
+
+            context.ChangeTracker.LazyLoadingEnabled = !LazyLoadingDisabled;
+
+            return query;
         }
 
         #endregion Methods
