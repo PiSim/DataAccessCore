@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccessCore.Commands;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessCore
 {
@@ -23,19 +25,39 @@ namespace DataAccessCore
 
         #region Methods
 
-        public void Execute(ICommand<T> commandObject)
+        private T GetDbContext()
         {
-            commandObject.Execute(_contextFactory.CreateDbContext(new string[] { }));
+            return _contextFactory.CreateDbContext(new string[] { });
         }
 
-        public T2 RunQuery<T2>(IScalar<T2, T> queryObject)
+        public void Execute(Command<T> commandObject)
         {
-            return queryObject.Execute(_contextFactory.CreateDbContext(new string[] { }));
+            commandObject.Execute(GetDbContext());
         }
 
-        public IQueryable<T2> RunQuery<T2>(IQuery<T2, T> queryObject)
+        public async Task ExecuteAsync(Command<T> commandObject)
         {
-            return queryObject.Execute(_contextFactory.CreateDbContext(new string[] { }));
+            await commandObject.ExecuteAsync(GetDbContext());
+        }
+
+        public T2 RunQuery<T2>(Scalar<T2, T> queryObject)
+        {
+            return queryObject.Execute(GetDbContext());
+        }
+
+        public IQueryable<T2> RunQuery<T2>(Query<T2, T> queryObject) where T2 : class
+        {
+            return queryObject.Execute(GetDbContext());
+        }
+
+        public async Task<T2> RunQueryAsync<T2>(Scalar<T2, T> queryObject)
+        {
+            return await queryObject.ExecuteAsync(GetDbContext());
+        }
+
+        public async Task<IQueryable<T2>> RunQueryAsync<T2>(Query<T2, T> queryObject) where T2 : class
+        {
+            return await queryObject.ExecuteAsync(GetDbContext());
         }
 
         #endregion Methods

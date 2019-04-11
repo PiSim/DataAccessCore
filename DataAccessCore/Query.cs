@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataAccessCore
 {
-    public class Query<T, T2> : IQuery<T, T2> where T : class where T2 : DbContext
+    public abstract class Query<T, T2> where T : class where T2 : DbContext
     {
         #region Properties
 
@@ -48,6 +49,18 @@ namespace DataAccessCore
             context.ChangeTracker.LazyLoadingEnabled = !LazyLoadingDisabled;
 
             return query;
+        }
+        
+        
+        /// <summary>
+         /// Asynchronously reates an IQueryable for the specified entity type and applies the given
+         /// AsNoTracking and LazyLoadingEnabled settings
+         /// </summary>
+         /// <param name="context">The DbContext to query</param>
+         /// <returns>An IQueryable<T></returns>
+        public async virtual Task<IQueryable<T>> ExecuteAsync(T2 context)
+        {
+            return await Task.Run(() => Execute(context));
         }
 
         #endregion Methods

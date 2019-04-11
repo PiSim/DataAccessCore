@@ -165,16 +165,14 @@
     <Compile Include="Commands\BulkDeleteEntitiesCommand.cs" />
     <Compile Include="Commands\BulkInsertEntitiesCommand.cs" />
     <Compile Include="Commands\BulkUpdateEntitiesCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DeleteAllEntitiesCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />
     <Compile Include="Commands\InsertEntityCommand.cs" />
     <Compile Include="Commands\ReloadEntityCommand.cs" />
     <Compile Include="Commands\UpdateEntityCommand.cs" />
     <Compile Include="DataServiceBase.cs" />
-    <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IDataService.cs" />
-    <Compile Include="Interfaces\IQuery.cs" />
-    <Compile Include="Interfaces\IScalar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="Scalar.cs" />

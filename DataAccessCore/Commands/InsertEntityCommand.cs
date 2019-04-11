@@ -5,7 +5,7 @@ namespace DataAccessCore.Commands
     /// <summary>
     /// Command object that inserts a given entity in the database
     /// </summary>
-    public class InsertEntityCommand<T> : ICommand<T> where T : DbContext
+    public class InsertEntityCommand<T> : Command<T> where T : DbContext
     {
         #region Fields
 
@@ -24,7 +24,7 @@ namespace DataAccessCore.Commands
 
         #region Methods
 
-        public void Execute(T context)
+        public override void Execute(T context)
         {
             context.Add(_entity);
             context.SaveChanges();

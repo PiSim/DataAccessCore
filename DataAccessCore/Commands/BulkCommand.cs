@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessCore.Commands
 {
-    public abstract class BulkCommand<T> : ICommand<T> where T : DbContext
+    public abstract class BulkCommand<T> : Command<T> where T : DbContext
     {
         public event ProgressChangedEventHandler ProgressChanged;
 
@@ -61,11 +61,11 @@ namespace DataAccessCore.Commands
         {
             ProgressChangedEventArgs e = new ProgressChangedEventArgs(ProgressPercentage, null);
 
-            ProgressChanged.Invoke(this, e);
+            ProgressChanged?.Invoke(this, e);
         }
 
 
-        public virtual void Execute(T context)
+        public override void Execute(T context)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -78,7 +78,6 @@ namespace DataAccessCore.Commands
 
             foreach (IEnumerable<object> batch in _batches)
             {
-                
                 using (IDbContextTransaction currentTransaction = context.Database.BeginTransaction())
                 {
                     try
@@ -93,6 +92,8 @@ namespace DataAccessCore.Commands
                         throw new DbUpdateException("Command Execution Failure: " + e.Message, e);
                     }
                 }
+
+                RaiseProgressChanged();
             }
 
             context.Dispose();

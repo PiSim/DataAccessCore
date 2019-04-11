@@ -2,7 +2,7 @@
 
 namespace DataAccessCore.Commands
 {
-    public class UpdateEntityCommand<T> : ICommand<T> where T : DbContext
+    public class UpdateEntityCommand<T> : Command<T> where T : DbContext
     {
         #region Fields
 
@@ -21,7 +21,7 @@ namespace DataAccessCore.Commands
 
         #region Methods
 
-        public void Execute(T context)
+        public override void Execute(T context)
         {
             context.Update(_entity);
             context.SaveChanges();

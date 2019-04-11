@@ -5,7 +5,7 @@ namespace DataAccessCore.Commands
     /// <summary>
     /// Command object that reloads all values for a given Entry
     /// </summary>
-    public class ReloadEntityCommand<T> : ICommand<T> where T : DbContext
+    public class ReloadEntityCommand<T> : Command<T> where T : DbContext
     {
         #region Fields
 
@@ -24,7 +24,7 @@ namespace DataAccessCore.Commands
 
         #region Methods
 
-        public void Execute(T context)
+        public override void Execute(T context)
         {
             context.Attach(_entity);
             context.Entry(_entity).Reload();

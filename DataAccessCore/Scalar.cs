@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading.Tasks;
 
 namespace DataAccessCore
 {
-    public abstract class Scalar<T, T2> : IScalar<T, T2> where T2 : DbContext
+    public abstract class Scalar<T, T2> where T2 : DbContext
     {
         #region Properties
 
@@ -18,6 +19,11 @@ namespace DataAccessCore
         #region Methods
 
         public abstract T Execute(T2 context);
+
+        public async virtual Task<T> ExecuteAsync(T2 context)
+        {
+            return await Task.Run(() => Execute(context));
+        }
 
         #endregion Methods
     }
