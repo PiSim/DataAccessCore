@@ -6,21 +6,28 @@ namespace DataAccessCore.Commands
     /// <summary>
     /// Command Object that updates the database values of a set of entities in a single transaction
     /// </summary>
-    public class BulkUpdateEntitiesCommand<T> :BulkCommand<T> where T : DbContext
+    public class InsertEntitiesCommand<T> : Command<T> where T : DbContext
     {
+        #region Fields
+
+        private readonly IEnumerable<object> _entities;
+
+        #endregion Fields
+
         #region Constructors
 
-        public BulkUpdateEntitiesCommand(IEnumerable<object> entities, int batchSize = 10000) : base(entities, batchSize)
+        public InsertEntitiesCommand(IEnumerable<object> entities)
         {
+            _entities = entities;
         }
 
         #endregion Constructors
 
         #region Methods
 
-        protected override void ExecuteBatch(IEnumerable<object> batch, T context)
+        protected override void RunAction(T context)
         {
-            context.UpdateRange(batch);
+            context.AddRange(_entities);
             context.SaveChanges();
         }
 

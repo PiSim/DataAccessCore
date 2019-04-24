@@ -1,23 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace DataAccessCore.Commands
 {
     /// <summary>
-    /// Command object that inserts a given entity in the database
+    /// Command Object that updates the database values of a set of entities in a single transaction
     /// </summary>
-    public class InsertEntityCommand<T> : Command<T> where T : DbContext
+    public class UpdateEntitiesCommand<T> : Command<T> where T : DbContext
     {
         #region Fields
 
-        private readonly object _entity;
+        private readonly IEnumerable<object> _entities;
 
         #endregion Fields
 
         #region Constructors
 
-        public InsertEntityCommand(object entity)
+        public UpdateEntitiesCommand(IEnumerable<object> entities)
         {
-            _entity = entity;
+            _entities = entities;
         }
 
         #endregion Constructors
@@ -26,10 +27,9 @@ namespace DataAccessCore.Commands
 
         protected override void RunAction(T context)
         {
-            context.Add(_entity);
+            context.UpdateRange(_entities);
             context.SaveChanges();
         }
-
 
         #endregion Methods
     }

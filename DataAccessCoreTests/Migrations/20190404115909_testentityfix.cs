@@ -4,26 +4,7 @@ namespace DataAccessCoreTests.Migrations
 {
     public partial class testentityfix : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_TestEntities_TestEntity2s_TestEntity2ID",
-                table: "TestEntities");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "TestEntity2ID",
-                table: "TestEntities",
-                nullable: true,
-                oldClrType: typeof(int));
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_TestEntities_TestEntity2s_TestEntity2ID",
-                table: "TestEntities",
-                column: "TestEntity2ID",
-                principalTable: "TestEntity2s",
-                principalColumn: "ID",
-                onDelete: ReferentialAction.Restrict);
-        }
+        #region Methods
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
@@ -46,5 +27,28 @@ namespace DataAccessCoreTests.Migrations
                 principalColumn: "ID",
                 onDelete: ReferentialAction.Cascade);
         }
+
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_TestEntities_TestEntity2s_TestEntity2ID",
+                table: "TestEntities");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "TestEntity2ID",
+                table: "TestEntities",
+                nullable: true,
+                oldClrType: typeof(int));
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_TestEntities_TestEntity2s_TestEntity2ID",
+                table: "TestEntities",
+                column: "TestEntity2ID",
+                principalTable: "TestEntity2s",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Restrict);
+        }
+
+        #endregion Methods
     }
 }

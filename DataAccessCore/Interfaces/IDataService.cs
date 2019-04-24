@@ -10,12 +10,19 @@ namespace DataAccessCore
         #region Methods
 
         void Execute(Command<T2> commandObject);
+
+        void Execute(BatchCommand<T2> commandObject);
+
         Task ExecuteAsync(Command<T2> commandObject);
 
+        Task ExecuteAsync(BatchCommand<T2> commandObject);
+
         T RunQuery<T>(Scalar<T, T2> queryObject);
-        Task<T> RunQueryAsync<T>(Scalar<T, T2> queryObject);
 
         IQueryable<T> RunQuery<T>(Query<T, T2> queryObject) where T : class;
+
+        Task<T> RunQueryAsync<T>(Scalar<T, T2> queryObject);
+
         Task<IQueryable<T>> RunQueryAsync<T>(Query<T, T2> queryObject) where T : class;
 
         #endregion Methods

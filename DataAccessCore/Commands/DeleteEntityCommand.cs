@@ -9,7 +9,7 @@ namespace DataAccessCore.Commands
     {
         #region Fields
 
-        private object _entity;
+        private readonly object _entity;
 
         #endregion Fields
 
@@ -28,7 +28,7 @@ namespace DataAccessCore.Commands
 
         #region Methods
 
-        public override void Execute(T context)
+        protected override void RunAction(T context)
         {
             context.Remove(_entity);
             context.SaveChanges();

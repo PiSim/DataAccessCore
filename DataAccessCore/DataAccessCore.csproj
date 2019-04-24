@@ -161,10 +161,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\BulkCommand.cs" />
-    <Compile Include="Commands\BulkDeleteEntitiesCommand.cs" />
-    <Compile Include="Commands\BulkInsertEntitiesCommand.cs" />
-    <Compile Include="Commands\BulkUpdateEntitiesCommand.cs" />
+    <Compile Include="Commands\BatchCommand.cs" />
+    <Compile Include="Commands\BatchUpdateEntitiesCommand.cs" />
+    <Compile Include="Commands\DeleteEntitiesCommand.cs" />
+    <Compile Include="Commands\BatchDeleteEntitiesCommand.cs" />
+    <Compile Include="Commands\BatchInsertEntitiesCommand.cs" />
+    <Compile Include="Commands\InsertEntitiesCommand.cs" />
+    <Compile Include="Commands\UpdateEntitiesCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DeleteAllEntitiesCommand.cs" />
     <Compile Include="Commands\DeleteEntityCommand.cs" />

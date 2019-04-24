@@ -1,21 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessCoreTests
 {
     public class TestContext : DbContext
     {
-        public DbSet<TestEntities.TestEntity> TestEntities { get; set; }
-        public DbSet<TestEntities.TestEntity2> TestEntity2s { get; set; }
+        #region Constructors
 
         public TestContext()
         {
-
         }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public DbSet<TestEntities.TestEntity> TestEntities { get; set; }
+        public DbSet<TestEntities.TestEntity2> TestEntity2s { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,5 +31,7 @@ namespace DataAccessCoreTests
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        #endregion Methods
     }
 }

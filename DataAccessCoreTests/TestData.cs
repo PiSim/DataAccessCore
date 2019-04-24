@@ -1,17 +1,16 @@
 ﻿using DataAccessCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessCoreTests
 {
     public class TestData : DataServiceBase<TestContext>
     {
+        #region Constructors
+
         public TestData(IDesignTimeDbContextFactory<TestContext> contextFactory) : base(contextFactory)
         {
         }
+
+        #endregion Constructors
     }
 }

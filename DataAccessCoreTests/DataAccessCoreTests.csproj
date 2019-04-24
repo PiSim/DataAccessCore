@@ -165,7 +165,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Commands\BulkInsertEntitiesCommandTests.cs" />
+    <Compile Include="Commands\BatchInsertEntitiesCommandTests.cs" />
     <Compile Include="Migrations\20190404094632_initialcreate.cs" />
     <Compile Include="Migrations\20190404094632_initialcreate.designer.cs">
       <DependentUpon>20190404094632_initialcreate.cs</DependentUpon>

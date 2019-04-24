@@ -5,6 +5,17 @@ namespace DataAccessCoreTests.Migrations
 {
     public partial class initialcreate : Migration
     {
+        #region Methods
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "TestEntities");
+
+            migrationBuilder.DropTable(
+                name: "TestEntity2s");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -47,13 +58,6 @@ namespace DataAccessCoreTests.Migrations
                 column: "TestEntity2ID");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "TestEntities");
-
-            migrationBuilder.DropTable(
-                name: "TestEntity2s");
-        }
+        #endregion Methods
     }
 }

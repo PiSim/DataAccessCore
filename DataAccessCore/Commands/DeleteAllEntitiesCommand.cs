@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessCore.Commands
 {
@@ -11,17 +7,24 @@ namespace DataAccessCore.Commands
     /// Command object that truncates the table associated with an entity type
     /// </summary>
     /// <typeparam name="T">The entity type to truncate</typeparam>
-    public class DeleteAllEntitiesCommand<T,T2> : Command<T> where T : DbContext where T2 : class
+    public class DeleteAllEntitiesCommand<T, T2> : Command<T> where T : DbContext where T2 : class
     {
+        #region Constructors
+
         public DeleteAllEntitiesCommand()
         {
         }
 
-        public override void Execute(T context)
+        #endregion Constructors
+
+        #region Methods
+
+        protected override void RunAction(T context)
         {
             context.RemoveRange(context.Set<T2>().ToList());
             context.SaveChanges();
-            context.Dispose();
         }
+
+        #endregion Methods
     }
 }

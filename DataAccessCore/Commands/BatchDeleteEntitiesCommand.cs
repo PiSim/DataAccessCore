@@ -7,11 +7,11 @@ namespace DataAccessCore.Commands
     /// Command object that deletes multiple entries in a single transaction
     /// </summary>
     /// <typeparam name="T">The type of DbContext to target</typeparam>
-    public class BulkDeleteEntitiesCommand<T> : BulkCommand<T> where T : DbContext
+    public class BatchDeleteEntitiesCommand<T> : BatchCommand<T> where T : DbContext
     {
         #region Constructors
 
-        public BulkDeleteEntitiesCommand(IEnumerable<object> entities, int batchSize = 10000) : base(entities, batchSize)
+        public BatchDeleteEntitiesCommand(IEnumerable<object> entities) : base(entities)
         {
         }
 
@@ -19,11 +19,7 @@ namespace DataAccessCore.Commands
 
         #region Methods
 
-        protected override void ExecuteBatch(IEnumerable<object> batch, T context)
-        {
-            context.RemoveRange(batch);
-            context.SaveChanges();
-        }
+        protected override Command<T> GetCommandForSingleBatch(IEnumerable<object> batch) => new DeleteEntitiesCommand<T>(batch);
 
         #endregion Methods
     }
